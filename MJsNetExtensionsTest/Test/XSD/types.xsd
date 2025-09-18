@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://salesweb.customer.com/schemas/" targetNamespace="https://salesweb.customer.com/schemas/" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
+    <xsd:annotation>
+        <xsd:appinfo>Types.xsd, XML Messages</xsd:appinfo>
+    </xsd:annotation>
+    <!-- FIXED LENGTH STRINGS -->
+    <!-- VARIABLE LENGTH STRINGS -->
+    <xsd:simpleType name="String1to2Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="2"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to3Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="3"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String0to5Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="0"/>
+            <xsd:maxLength value="5"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String0to7Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="0"/>
+            <xsd:maxLength value="7"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to10Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="10"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to15Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="15"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to18Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="18"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to20Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to30Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="30"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String0to30Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="0"/>
+            <xsd:maxLength value="30"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String0to35Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="0"/>
+            <xsd:maxLength value="35"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to35Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="35"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to50Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="50"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String0to80Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="0"/>
+            <xsd:maxLength value="80"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to80Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="80"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to255Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="255"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="String1to1024Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="1024"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <!-- FIXED LENGTH INTEGER -->
+    <xsd:simpleType name="positiveNonZeroIntegerType">
+        <xsd:restriction base="xsd:nonNegativeInteger">
+            <xsd:minInclusive value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Integer7Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{7}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Integer14Type">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{14}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <!-- VARIABLE LENGTH INTEGER -->
+    <xsd:simpleType name="Integer1to3Type">
+        <xsd:restriction base="xsd:nonNegativeInteger">
+            <xsd:totalDigits value="3"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Integer1to5Type">
+        <xsd:restriction base="xsd:nonNegativeInteger">
+            <xsd:totalDigits value="5"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Integer1to7Type">
+        <xsd:restriction base="xsd:nonNegativeInteger">
+            <xsd:totalDigits value="7"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Integer1to12Type">
+        <xsd:restriction base="xsd:nonNegativeInteger">
+            <xsd:totalDigits value="12"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Integer1to14Type">
+        <xsd:restriction base="xsd:nonNegativeInteger">
+            <xsd:totalDigits value="14"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="SimpleFloat1to10Type">
+        <xsd:restriction base="xsd:decimal">
+            <xsd:totalDigits value="5"/>
+            <xsd:fractionDigits value="5"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="SimpleFloat1to3SingleDecimalType">
+        <xsd:restriction base="xsd:decimal">
+            <xsd:totalDigits value="3"/>
+            <xsd:fractionDigits value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="SimplePercentType">
+        <xsd:restriction base="xsd:decimal">
+            <xsd:fractionDigits value="2"/>
+            <xsd:totalDigits value="5"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+  <xsd:simpleType name="TwoPointPrecisionDecimal">
+    <xsd:annotation>
+      <xsd:documentation>positive, negative or zero two point precision decimal</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:fractionDigits value="2"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="nonNegativeTwoPointPrecisionDecimal">
+    <xsd:annotation>
+      <xsd:documentation>Represents a two point precision decimal that is greater than or equal to zero.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:fractionDigits value="2"/>
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="yesNoType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="yes"/>
+            <xsd:enumeration value="YES"/>
+            <xsd:enumeration value="no"/>
+            <xsd:enumeration value="NO"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="languageType">
+        <xsd:restriction base="xsd:language">
+            <xsd:enumeration value="de"/>
+            <xsd:enumeration value="DE"/>
+            <xsd:enumeration value="fr"/>
+            <xsd:enumeration value="FR"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="availabilityType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="yes"/>
+            <xsd:enumeration value="YES"/>
+            <xsd:enumeration value="no"/>
+            <xsd:enumeration value="NO"/>
+            <xsd:enumeration value="later"/>
+            <xsd:enumeration value="LATER"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="mannerOfTransportType">
+        <xsd:annotation>
+            <xsd:documentation>tour = normal delivery, postExpress = by post express, selfPickUp = customer will pick-up the goods himself at wholsalers warehouse.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="tour"/>
+            <xsd:enumeration value="post-express"/>
+            <xsd:enumeration value="self-pick-up"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="targetDefinitionType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="turnover"/>
+            <xsd:enumeration value="quantity"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="browseDirection">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="next"/>
+            <xsd:enumeration value="previous"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="backlogType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="internalTransfer"/>
+            <xsd:enumeration value="externalDelivery"/>
+            <xsd:enumeration value="externalPurchase"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

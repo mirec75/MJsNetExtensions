@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns="https://salesweb.customer.com/schemas/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="https://salesweb.customer.com/schemas/" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="types.xsd"/>
+	<xsd:include schemaLocation="elements.xsd"/>
+	<xsd:annotation>
+		<xsd:appinfo>customerOrder.xsd, Web Application, Customer Order XML Message</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:element name="customerOrder">
+		<xsd:complexType>
+			<xsd:annotation>
+				<xsd:documentation/>
+			</xsd:annotation>
+			<xsd:sequence>
+				<xsd:element ref="client"/>
+				<xsd:element ref="orderHeader"/>
+				<xsd:element ref="orderLines"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="SimpleFloat1to3SingleDecimalType" use="required" fixed="1.0">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="EN">First Version is 1.0. To be used in future to possibly support multiple versions running in parallel.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="interfaceVersion" default="1">
+				<xsd:annotation>
+					<xsd:documentation>1 = the original interface version before 31.05.2019</xsd:documentation>
+					<xsd:documentation>2 = send details about Quantities: immediate, inter branch transfer, delayed, purchase order and lack in response in each customerOrderResponse/orderLinesResponse/productOrderLineResponse/productResponse element.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="language" type="languageType" use="optional">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="EN">If not present - customers standard language will be used. If this is not set, system language is used.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="roundUpForCondition" type="xsd:boolean" use="optional" default="true">
+				<xsd:annotation>
+					<xsd:documentation>If customer database record allows, order quantity is increased for customer so that he can profit from better conditions. Order quantity has to reach at least 80% of the quantity for better coindition to be a candidate for this up-rounding process. Setting this attribute to false disables this process.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="backLogDesired" type="xsd:boolean" use="optional" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Currently not available products are taken in back log (so called Nota, Nota internal or Besorger). Setting this attribute to false disables this behaviour.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="productDescriptionDesired" type="xsd:boolean" use="optional" default="false">
+				<xsd:annotation>
+					<xsd:documentation>Setting this attribute to false will eliminate product descriptions attribute from productResponse Tag.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="compressionDesired" type="xsd:boolean" use="optional" default="false">
+				<xsd:annotation>
+					<xsd:documentation>Setting this attribute to true will cause our server sending g-zipped (compressed) response.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="communicationSoftwareId" type="xsd:string" use="optional">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="EN">Name/Id and version of the software used for communication</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="interbranchTransferDetails" type="xsd:boolean" use="optional" default="false">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="EN">true if you want to receive detailed information about interbranch transfer</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="tourDetails" type="xsd:boolean" use="optional" default="false">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="EN">true if you want to receive detailed information about the tour</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="orderHeader">
+		<xsd:complexType>
+			<xsd:all>
+				<xsd:element ref="deliveryAddress" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>This is an optional element. It should be sent only if other then standard address is needed on the delivery note. For example one could send some number that will be printed as barcode within the address window on the delivery note.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element ref="orderDetails" minOccurs="0"/>
+			</xsd:all>
+			<xsd:attribute name="deliveryDate" type="xsd:date" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>Desired date of delivery. It is used to calculate customers next delivery.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="referenceNumber" type="String1to15Type" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This will be printed on our delivery document in text. The same information is sent in the delivery note download response.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="urgent" type="xsd:boolean" use="optional" default="false">
+				<xsd:annotation>
+					<xsd:documentation>Customer service will be notified and will try to contact the customer as soon as possible to arange fastest possible delivery</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="phoneCallDesired" type="xsd:boolean" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>Setting this attribute to true will cause customer service representative to phone the customer.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="mannerOfTransport" type="mannerOfTransportType" use="optional" default="tour">
+				<xsd:annotation>
+					<xsd:documentation>This attribute describes how should this order be delivered. The standard (usual) way is by normal tour. See also Types.xsd.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="orderLines">
+		<xsd:complexType>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:element ref="productOrderLine"/>
+				<xsd:element ref="productLabelOrderLine"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

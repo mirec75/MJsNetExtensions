@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="https://abc.xyz.com/myDmmy/main/v01"
+	xmlns:mymain="https://abc.xyz.com/myDmmy/main/v01"
+	xmlns:mybase="https://abc.xyz.com/myDmmy/base/v01"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	>
+
+	<xs:import namespace="https://abc.xyz.com/myDmmy/base/v01" schemaLocation="../Base/base.xsd" />
+	
+	<xs:element name="myRoot">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="client">
+					<xs:complexType>
+						<xs:attribute name="number" type="xs:int" use="required"/>
+						<xs:attribute name="password" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="mybase:item" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

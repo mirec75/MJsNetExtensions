@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:element name="productAvailabilityRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="client"/>
+				<xs:element ref="products"/>
+			</xs:sequence>
+			<xs:attribute name="version" type="xs:string" use="required"/>
+			<xs:attribute name="sendExpiryDates" type="xs:boolean" default="false"/>
+			<xs:attribute name="interfaceVersion">
+				<xs:annotation>
+					<xs:documentation>1 = send EAN information in response</xs:documentation>
+					<xs:documentation>2 = send details about Quantities: immediate, inter branch transfer, delayed, purchase order and lack in response</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="language" type="languageType" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">If not present - customers standard language will be used. If this is not set, system language is used.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="client">
+		<xs:complexType>
+			<xs:attribute name="number" type="xs:string" use="required"/>
+			<xs:attribute name="password" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="product">
+		<xs:complexType>
+			<xs:attribute name="number" type="xs:long" use="optional"/>
+			<xs:attribute name="quantity" type="xs:short" use="required"/>
+      <xs:attribute name="ean" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="products">
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="product"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="languageType">
+		<xs:restriction base="xs:language">
+			<xs:enumeration value="de"/>
+			<xs:enumeration value="DE"/>
+			<xs:enumeration value="fr"/>
+			<xs:enumeration value="FR"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

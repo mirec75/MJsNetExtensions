@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="https://abc.xyz.com/myDmmy/base/v01"
+	xmlns:mybase="https://abc.xyz.com/myDmmy/base/v01"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	>
+
+	<xs:simpleType name="imteKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="abc" />
+			<xs:enumeration value="xyz" />
+			<xs:enumeration value="etc" />
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>
