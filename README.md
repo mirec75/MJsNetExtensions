@@ -1,13 +1,29 @@
+
 # Table of Contents
-[TOC]
+
+- [About MJsNetExtensions](#about-mjsnetextensions)
+- [Simplified method parameter checking - Throw.IfNull() & co.](#simplified-method-parameter-checking---throwifnull--co)
+- [Strongly-Typed Object Validation: ISimpleValidatable and IValidatable, or ISimpleValidatableAndUpdatable and IValidatableAndUpdatable](#strongly-typed-object-validation-isimplevalidatable-and-ivalidatable-or-isimplevalidatableandupdatable-and-ivalidatableandupdatable)
+- [Strongly-Typed Object Validation Examples](#strongly-typed-object-validation-examples)
+- [The OperationResult Pattern](#the-operationresult-pattern)
+- [IO Helpers](#io-helpers)
+- [XML – XSD / DTD Validation – made properly](#xml--xsd--dtd-validation--made-properly)
+- [XML Deserialization = XML Validation *AND* Strongly-Typed Object Validation Combined!](#xml-deserialization--xml-validation-and-strongly-typed-object-validation-combined)
+- [XML Serialization - supporting Default Namespace, xsi:schemaLocation and xsi:noNamespaceSchemaLocation](#xml-serialization---supporting-default-namespace-xisischemalocation-and-xisinonamespaceschemalocation)
+- [General extensions](#general-extensions)
+- [Simple SMTP Mail Sending](#simple-smtp-mail-sending)
+- [TPL Task extensions](#tpl-task-extensions)
+- [Windows RunAs Impersonation: Interactive LogOn "RunAs"](#windows-runas-impersonation-interactive-logon-runas)
+- [Contributing to MJsNetExtensions](#contributing-to-mjsnetextensions)
 
 # About MJsNetExtensions
 
 MJsNetExtensions represents a collection of common .Net utilities, helpers and extensions, which shall make the everyday coding easier.
 
-You can find the newest NuGet package here: ...
 
-The MJsNetExtensions sources are  [here](MJsNetExtensions)
+You can find the newest NuGet package here: [NuGet Gallery](https://www.nuget.org/packages/MJsNetExtensions)
+
+The MJsNetExtensions sources are [here](MJsNetExtensions)
 
 In the next chapters follows the information about the contained features:
 
@@ -53,15 +69,17 @@ this.PortNumbers = portNumbers.ThrowIfNullOrEmpty     (nameof(portNumbers));
 # Strongly-Typed Object Validation: `ISimpleValidatable` and `IValidatable`, or `ISimpleValidatableAndUpdatable` and `IValidatableAndUpdatable`
 This emerging design pattern uses `ValidationResult` object to fix an old problem of using methods like: `bool IsValid(out string invalidReason) {...}` and leveraging the Strongly-Typed Object Validation to use validation result object instead.
 
+
 This problem and solution of this emerging design pattern (as of April 2021) is roughly described here:
-+ https://keestalkstech.com/2019/09/validate-strongly-typed-options-when-using-config-sections/
-  Same Author and Topic: https://medium.com/wehkamp-techblog/validate-strongly-typed-options-when-using-config-sections-fffbadd30821
-+ https://andrewlock.net/adding-validation-to-strongly-typed-configuration-objects-in-asp-net-core/
-+ https://www.simongilbert.net/validation-rules-fluentvalidation-csharp-dotnetcore/
++ [Validate strongly-typed options when using config sections (keestalkstech.com)](https://keestalkstech.com/2019/09/validate-strongly-typed-options-when-using-config-sections/)
+    Same Author and Topic: [Validate strongly-typed options when using config sections (medium.com)](https://medium.com/wehkamp-techblog/validate-strongly-typed-options-when-using-config-sections-fffbadd30821)
++ [Adding validation to strongly-typed configuration objects in ASP.NET Core (andrewlock.net)](https://andrewlock.net/adding-validation-to-strongly-typed-configuration-objects-in-asp-net-core/)
++ [Validation rules with FluentValidation (simongilbert.net)](https://www.simongilbert.net/validation-rules-fluentvalidation-csharp-dotnetcore/)
+
 
 There are some interesting approaches out there:
-+ https://fluentvalidation.net/
-+ http://breeze.github.io/doc-cs/validation.html
++ [FluentValidation](https://fluentvalidation.net/)
++ [Breeze Validation](http://breeze.github.io/doc-cs/validation.html)
 
 ...but I needed something, where the class hierarchy, defined e.g. by an XML Schema, after it is being XML validated and parsed into a C# object, could be automatically hierarchically validated.
 
@@ -154,19 +172,16 @@ E.g. all projects based on:
 base.xmlconfigbase
 And there are at least 4 of them as of April 2021.
 
-SWIMP / MSV3 XML request and response validation is forseen to use this technology.
+SOAP XML request and response validation is forseen to use this technology.
 
 # The `OperationResult` Pattern
 The problem and solution of this emerging design pattern (as of April 2021) is roughly described here:
 
-+ (2018) The Operation Result Pattern — A Simple Guide
-https://medium.com/@cummingsi1993/the-operation-result-pattern-a-simple-guide-fe10ff959080#
-+ (2015) Error Handling in SOLID C# .NET – The Operation Result
-https://www.codeproject.com/Articles/1022462/Error-Handling-in-SOLID-Csharp-NET-The-Operation-R
-+ Is there an alternative to the Notification pattern for multiple messages and success/failure?
-https://stackoverflow.com/questions/40404327/is-there-an-alternative-to-the-notification-pattern-for-multiple-messages-and-su
-+ DotNET: Why catch(Exception)/empty catch is bad
-https://devblogs.microsoft.com/dotnet/why-catchexceptionempty-catch-is-bad/#:~:text=Empty%20catch%20statements%20can%20be,even%20non%2DCLS%20compliant%20exceptions.&text=If%20you%20use%20a%20StreamReader,and%20handle%E2%80%94these%20two%20exceptions.
+
++ (2018) [The Operation Result Pattern — A Simple Guide](https://medium.com/@cummingsi1993/the-operation-result-pattern-a-simple-guide-fe10ff959080#)
++ (2015) [Error Handling in SOLID C# .NET – The Operation Result](https://www.codeproject.com/Articles/1022462/Error-Handling-in-SOLID-Csharp-NET-The-Operation-R)
++ [Is there an alternative to the Notification pattern for multiple messages and success/failure? (StackOverflow)](https://stackoverflow.com/questions/40404327/is-there-an-alternative-to-the-notification-pattern-for-multiple-messages-and-su)
++ [DotNET: Why catch(Exception)/empty catch is bad (devblogs.microsoft.com)](https://devblogs.microsoft.com/dotnet/why-catchexceptionempty-catch-is-bad/#:~:text=Empty%20catch%20statements%20can%20be,even%20non%2DCLS%20compliant%20exceptions.&text=If%20you%20use%20a%20StreamReader,and%20handle%E2%80%94these%20two%20exceptions.)
 
 In MJsNetExtensions there are 2 classes `OperationResult` `OperationResult<T>` implementing this pattern and many usages already in the MJsNetExtensions solution.
 See e.g.: `SmtpMailSender.SendMail(...)` implementation.
@@ -260,8 +275,8 @@ The 1st main usage is: XmlConfigBase and all projects based on it. See:
 base.xmlconfigbase
 And there are at least 4 of them as of April 2021.
 
-SWIMP / MSV3 XML request and response validation is foreseen to use this technology.
-SWIMP-CH already uses this optimized technology for request and response validation and deserialization.
+SOAP XML request and response validation is foreseen to use this technology.
+I have some projects which already use this optimized technology for request and response validation and deserialization.
 
 XML Deserialization provides a family of extension methods `XmlTo()` and `XmlToAndValidate()` (and derivates) to parse XML string, or load XML file, or read from XmlReader, TextReader or Stream.
 
@@ -269,7 +284,7 @@ XML Deserialization provides a family of extension methods `XmlTo()` and `XmlToA
 # XML Serialization - supporting Default Namespace, xsi:schemaLocation and xsi:noNamespaceSchemaLocation
 
 There is a list of `ToXml()` methods simplifying serialization to XML string, file, XmlWriter, TextWriter and Stream.
-It was developed originally to simplify SWIMP response serializing purposes. This approach simplifies previous several XML serialization steps into one generic step writing all the necessary Default Namespace, xsi:schemaLocation or xsi:noNamespaceSchemaLocation into the resulting XML.
+It was developed originally to simplify SOAP response serializing purposes. This approach simplifies previous several XML serialization steps into one generic step writing all the necessary Default Namespace, xsi:schemaLocation or xsi:noNamespaceSchemaLocation into the resulting XML.
 
 # General extensions
 + `Trim()` – `DateTime` to a specific precision, e.g. to a whole second, or hour, or day, etc.
@@ -292,11 +307,13 @@ LINQ:
 + `IndexOf()` – but it makes sense only if the enumerable keeps its elements in a sequence
 
 # Simple SMTP Mail Sending 
-See `SmtpMailSender`, with `SmtpMailMessage` and `SmtpClientSettings` for more.
 
-The very first real life usage can be found here:
-salesweb.swimp
-dev\src\SWIMP-CH\Swimp-CH.sln
+Is implemented in [`Mail/SmtpMailSender`](https://github.com/mirec75/MJsNetExtensions/blob/main/MJsNetExtensions/Mail/SmtpMailSender.cs), with [`Mail/SmtpMailMessage`](https://github.com/mirec75/MJsNetExtensions/blob/main/MJsNetExtensions/Mail/SmtpMailMessage.cs) and [`Mail/SmtpClientSettings`](https://github.com/mirec75/MJsNetExtensions/blob/main/MJsNetExtensions/Mail/SmtpClientSettings.cs).
+This implemetation is a small compact functional example of a combined usage of the patterns supported and utils provided by this NuGet:
+- Strongly-Typed Object Validation
+- The `OperationResult` Pattern
+- Simplified method parameter checking
+
 
 # TPL Task extensions
 TPL Task Extensions are useful, if following scenarios:
@@ -310,9 +327,9 @@ Task.Factory.StartNew(
 ).IgnoreExceptionsOnNoWaitedTask();
 ```
 
+
 You can read more on this here:
- Joe Albahari - PART 5: PARALLEL PROGRAMMING
- <http://www.albahari.com/threading/part5.aspx>
+ [Joe Albahari - PART 5: PARALLEL PROGRAMMING](http://www.albahari.com/threading/part5.aspx)
 
 + `WithThrowOnCancellation()` – method which enables to cancel blocking `await`-s and terminate them with TaskCanceledException. Use it e.g. like this:
 ```C#
@@ -334,6 +351,7 @@ WinRunAsImpersonation.InteractiveLogOnRunAs(
 
 To use this functionality I recommend to log on once with the user (e.g. the "CUSTOMER_DOMAIN\svc.salesquery") on the computer, where you want to run the code.
 Then all the Registry data and Windows User files and directories, like %AppData% are available on the system.
+
 
 Read more on this:
 1. [MSDN: WindowsIdentity.Impersonate Method](https://docs.microsoft.com/en-us/dotnet/api/system.security.principal.windowsidentity.impersonate?redirectedfrom=MSDN&view=netframework-4.8#System_Security_Principal_WindowsIdentity_Impersonate)
