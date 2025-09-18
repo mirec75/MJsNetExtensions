@@ -2,6 +2,7 @@
 # Table of Contents
 
 - [About MJsNetExtensions](#about-mjsnetextensions)
+- [Simple SMTP Mail Sending](#simple-smtp-mail-sending)
 - [Simplified method parameter checking - Throw.IfNull() & co.](#simplified-method-parameter-checking---throwifnull--co)
 - [Strongly-Typed Object Validation: ISimpleValidatable and IValidatable, or ISimpleValidatableAndUpdatable and IValidatableAndUpdatable](#strongly-typed-object-validation-isimplevalidatable-and-ivalidatable-or-isimplevalidatableandupdatable-and-ivalidatableandupdatable)
 - [Strongly-Typed Object Validation Examples](#strongly-typed-object-validation-examples)
@@ -11,7 +12,6 @@
 - [XML Deserialization = XML Validation *AND* Strongly-Typed Object Validation Combined!](#xml-deserialization--xml-validation-and-strongly-typed-object-validation-combined)
 - [XML Serialization - supporting Default Namespace, xsi:schemaLocation and xsi:noNamespaceSchemaLocation](#xml-serialization---supporting-default-namespace-xisischemalocation-and-xisinonamespaceschemalocation)
 - [General extensions](#general-extensions)
-- [Simple SMTP Mail Sending](#simple-smtp-mail-sending)
 - [TPL Task extensions](#tpl-task-extensions)
 - [Windows RunAs Impersonation: Interactive LogOn "RunAs"](#windows-runas-impersonation-interactive-logon-runas)
 - [Contributing to MJsNetExtensions](#contributing-to-mjsnetextensions)
@@ -26,6 +26,15 @@ You can find the newest NuGet package here: [NuGet Gallery](https://www.nuget.or
 The MJsNetExtensions sources are [here](MJsNetExtensions)
 
 In the next chapters follows the information about the contained features:
+
+
+# Simple SMTP Mail Sending 
+
+Is implemented in [`Mail/SmtpMailSender`](https://github.com/mirec75/MJsNetExtensions/blob/main/MJsNetExtensions/Mail/SmtpMailSender.cs), with [`Mail/SmtpMailMessage`](https://github.com/mirec75/MJsNetExtensions/blob/main/MJsNetExtensions/Mail/SmtpMailMessage.cs) and [`Mail/SmtpClientSettings`](https://github.com/mirec75/MJsNetExtensions/blob/main/MJsNetExtensions/Mail/SmtpClientSettings.cs).
+This implemetation is a small compact functional example of a combined usage of the patterns supported and utils provided by this NuGet:
+- Strongly-Typed Object Validation
+- The `OperationResult` Pattern
+- Simplified method parameter checking
 
 
 # Simplified method parameter checking - Throw.IfNull() & co.
@@ -305,15 +314,6 @@ String or StringBuilder extensions:
 LINQ:
 + `Interleave()`
 + `IndexOf()` – but it makes sense only if the enumerable keeps its elements in a sequence
-
-# Simple SMTP Mail Sending 
-
-Is implemented in [`Mail/SmtpMailSender`](https://github.com/mirec75/MJsNetExtensions/blob/main/MJsNetExtensions/Mail/SmtpMailSender.cs), with [`Mail/SmtpMailMessage`](https://github.com/mirec75/MJsNetExtensions/blob/main/MJsNetExtensions/Mail/SmtpMailMessage.cs) and [`Mail/SmtpClientSettings`](https://github.com/mirec75/MJsNetExtensions/blob/main/MJsNetExtensions/Mail/SmtpClientSettings.cs).
-This implemetation is a small compact functional example of a combined usage of the patterns supported and utils provided by this NuGet:
-- Strongly-Typed Object Validation
-- The `OperationResult` Pattern
-- Simplified method parameter checking
-
 
 # TPL Task extensions
 TPL Task Extensions are useful, if following scenarios:
