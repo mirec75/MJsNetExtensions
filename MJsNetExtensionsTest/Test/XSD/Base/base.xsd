@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="https://abc.xyz.com/myDmmy/base/v01"
+	xmlns:mybase="https://abc.xyz.com/myDmmy/base/v01"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	>
+
+	<!-- Base parts includes -->
+	<xs:include schemaLocation="enums.xsd" />
+
+	<xs:element name="item">
+		<xs:complexType>
+			<xs:attribute name="kind" type="mybase:imteKind" use="required" />
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

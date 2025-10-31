@@ -1,0 +1,85 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AssemblyTitle>MJsNetExtensionsTest</AssemblyTitle>
+    <Product>MJs MJsNetExtensionsTest</Product>
+    <Copyright>Copyleft ©</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    
+    <!-- Enable .NET analyzers -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>All</AnalysisMode>
+    
+    <!-- Suppress CA1515 for test project - MSTest requires public test classes -->
+    <!-- Suppress CA1707 for test project - Allow underscores in test method names for readability -->
+    <!-- Suppress CA1852 Type 'XY' can be sealed because it has no subtypes in its containing assembly and is not externally visible -->
+    <!-- Suppress CS8981 The type name 'XY' only contains lower-cased ascii characters. Such names may become reserved for the language. -->
+    <!-- Suppress S125 Remove this commented out code. -->
+    <NoWarn>$(NoWarn);CA1515;CA1707;CA1852;CS8981;S125;S108</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MJsNetExtensions\MJsNetExtensions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\GlobalCustomDictionary.xml">
+      <Link>GlobalCustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Test\Emb-edded Res_sourc-e  = `%24[1%28%29]{}°~!%40^_+%3b,.%27\Dummy Embedded-Resource = `%24[2%28%29]{}°~!%40^_+%3b,.%27.txt" />
+    <EmbeddedResource Include="Dummy Embedded-Resource = 1.txt" />
+    <Content Include="Test\MyDummy.Invalid.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Test\MyDummy.Valid.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestFramework" Version="3.10.4" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.10.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Test\XSD\Base\base.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Test\XSD\Base\enums.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Test\XSD\customerOrder.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Test\XSD\elements.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Test\XSD\Main\DummyMain.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Test\XSD\productAvailabilityRequest.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Test\XSD\productQuantities.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Test\XSD\types.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

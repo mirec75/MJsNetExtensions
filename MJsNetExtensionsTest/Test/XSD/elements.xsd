@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://salesweb.customer.com/schemas/" targetNamespace="https://salesweb.customer.com/schemas/" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="types.xsd"/>
+	<xsd:include schemaLocation="productQuantities.xsd"/>
+	<xsd:annotation>
+		<xsd:appinfo>Elements.xsd, Common elements used in XML Messages</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:element name="client" nillable="true">
+		<xsd:complexType>
+			<xsd:attribute name="number" type="String1to30Type" use="required"/>
+			<xsd:attribute name="password" type="String0to80Type" use="optional"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="clientErrorResponse" nillable="true">
+		<xsd:complexType>
+			<xsd:attribute name="number" type="String1to80Type" use="required"/>
+			<xsd:attribute name="message" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="error" nillable="true">
+		<xsd:annotation>
+			<xsd:documentation>Generic error</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="message" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="EAN" nillable="true">
+		<xsd:complexType>
+			<xsd:attribute name="id" type="Integer1to14Type" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="pharmaCode" nillable="true">
+		<xsd:annotation>
+			<xsd:documentation>This is a official swiss pharmaceutical product identification code. It has to be 7 digits long (see type definitions), even if it has preceeding zeros. The last digit is a checksum digit.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="id" type="Integer1to7Type" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="supplierProductNumber" nillable="true">
+		<xsd:annotation>
+			<xsd:documentation>Code used by supplier to identify the products. Suppliers EAN id identifies the supplier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="id" type="String1to80Type" use="required"/>
+			<xsd:attribute name="EANsupplierId" type="Integer1to14Type" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="deliveryAddress">
+		<xsd:annotation>
+			<xsd:documentation>Data from this tag an its children is printed in the address box of our delivery document. You can either supply 5 text lines or 3 lines and one barcode (Barcode code128 will be printed).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="addressLine2And3Text"/>
+				<xsd:element ref="addressLine2And3BarCode"/>
+			</xsd:choice>
+			<xsd:attribute name="line1" type="String1to30Type" use="required"/>
+			<xsd:attribute name="line4" type="String0to30Type" use="required"/>
+			<xsd:attribute name="line5PostalCode" type="String1to10Type" use="required"/>
+			<xsd:attribute name="line5City" type="String1to20Type" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="orderDetails">
+		<xsd:annotation>
+			<xsd:documentation>Polymed Business</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="PharmacyOrderNo">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:long">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="99999999"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="PharmacyCustomerNo">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:long">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="9999999"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="PharmacyTour">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="10"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="TypeOfDispatch">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="2"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="ProcessID">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:long">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="9999999"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="addressLine2And3Text" nillable="true">
+		<xsd:annotation>
+			<xsd:documentation>Text lines for the delivery note addres window. (5 lines rectangle in upper right corner)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="line2" type="String1to30Type" use="required">
+				<xsd:annotation>
+					<xsd:documentation>Second text line for the delivery note addres window.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="line3" type="String1to30Type" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>Third text line for the delivery note addres window</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="addressLine2And3BarCode" nillable="true">
+		<xsd:annotation>
+			<xsd:documentation>Instead of text 2nd and 3rd line of the address window can be used for barcode. This element defines string to be displayed as bar code.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="barCode128" type="String1to18Type" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="product">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="EAN"/>
+				<xsd:element ref="pharmaCode"/>
+				<xsd:element ref="supplierProductNumber"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productResponse" nillable="true">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="quantities" minOccurs="0" />
+			</xsd:sequence>
+			<xsd:attribute name="wholesalerProductCode" type="Integer7Type" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the product code used by wholesaler to identify the product.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="description" type="String1to80Type" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>Given the flag on orderHeader, this attribute can be omitted. (50+11 characters less per order line!)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="basePiecePrice" type="TwoPointPrecisionDecimal" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the price for one piece, logistic costs exclusive.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="publicPricePerPiece" type="TwoPointPrecisionDecimal" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>This is the price for one piece, logistic costs exclusive.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="baseLinePrice" type="TwoPointPrecisionDecimal" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the price for one line, logistic costs exclusive.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="expectedLogisticServiceCost" type="TwoPointPrecisionDecimal" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is expected amount of logistic costs. The actual value will be calculated at the start of the picking process.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="bonusQuantity" type="Integer1to5Type" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>This is the quantity, that customer gets free of charge. It is here to be reserved for future use.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="invoiceQuantity" type="Integer1to5Type" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the quantity, the customer pays for.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="discountPercent" type="SimplePercentType" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>This is the total line dicount percent the customer get including bonus.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="deliveryQuantity" type="Integer1to5Type" use="required">
+				<xsd:annotation>
+					<xsd:documentation>If this quantity is bigger then invoiceQuantity, there is natural rebate for this product.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="campaign" type="xsd:boolean" use="required">
+				<xsd:annotation>
+					<xsd:documentation>If this attribute is set to true, this product has some conditions that are quantity dependent.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="lineAmount" type="xsd:float" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the EXPECTED price for the line, logistic costs inclusive. Logisitc costs are finally calculated at the start of pick process and are therefore here stated as EXPECTED costs.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="migelCode" type="xsd:string" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>Mittel- und Gegenstände-Liste (MiGeL)/Liste des moyens et appareils (LiMA)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="migelCodeDescription" type="xsd:string" use="optional"/>
+			<xsd:attribute name="interbranchTransferQuantity" type="Integer1to5Type" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>This is the quantity, that customer gets from another branch.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productError" nillable="true">
+		<xsd:annotation>
+			<xsd:documentation>Attribute messageKey is currently used only in internal messages.</xsd:documentation>
+			<xsd:documentation>Attribute message is filled in the request's language and should be displayed to the user without editting, whenever possible.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="wholesalerProductCode" type="xsd:string" use="optional"/>
+			<xsd:attribute name="message" type="xsd:string" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This attribute is filled in the request's language and should be displayed to the user without editting, whenever possible.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="messageKey" type="xsd:string" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>Currently used in internal messages only.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productMasterdata" nillable="true">
+		<xsd:complexType>
+			<xsd:attribute name="wholesalerProductCode" type="Integer7Type" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the product code used by wholesaler to identify the product.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="description" type="String1to80Type" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>Depending on the flag from request, this attribute can be omitted.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="basePiecePrice" type="TwoPointPrecisionDecimal" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the price for one piece, logistic costs exclusive.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="publicPricePerPiece" type="TwoPointPrecisionDecimal" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>This is the public price for one piece (suggested retail price).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="migelCode" type="xsd:string" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>Mittel- und Gegenstände-Liste (MiGeL)/Liste des moyens et appareils (LiMA)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="migelCodeDescription" type="xsd:string" use="optional"/>
+			<xsd:attribute name="EAN" type="Integer1to14Type"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productConditionLevels">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="productConditionLevel" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productConditionLevel">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="productConditionType"/>
+				<xsd:element ref="productConditionLevelPrice"/>
+			</xsd:sequence>
+			<xsd:attribute name="validFrom" type="xsd:date" use="optional"/>
+			<xsd:attribute name="validUntil" type="xsd:date" use="optional"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productConditionLevelPrice">
+		<xsd:complexType>
+			<xsd:attribute name="deliveryQuantity" type="Integer1to5Type" use="required">
+				<xsd:annotation>
+					<xsd:documentation>If this quantity is bigger then invoiceQuantity, there is natural rebate for this product.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="invoiceQuantity" type="Integer1to5Type" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the quantity, the customer pays for.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="bonusQuantity" type="Integer1to5Type" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>This is the quantity, that customer gets free of charge (natural rebate). It's calculated as (deliveryQuantity - invoiceQuantity).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="discountPercent" type="SimplePercentType" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>This is total line dicount percent the customer get including bonus.</xsd:documentation>
+					<xsd:documentation>If this is volume dependent condition sum of directDiscountPercent and discountPercentForTargetVolume is given here.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="piecePrice" type="TwoPointPrecisionDecimal" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the price for one piece on this level inclusive all discounts that apply (discount% and  natural rebate), but logistic costs exclusive.</xsd:documentation>
+					<xsd:documentation>If this is volume dependent condition both direct and target volume discount are taken in the calculation.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="expectedLogisticServiceCost" type="TwoPointPrecisionDecimal" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>This is expected amount of logistic costs. The actual value will be calculated at the start of the picking process.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="expectedTotalPiecePrice" type="TwoPointPrecisionDecimal" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>This is expected price for one piece on this level inclusive all discounts that apply and inclusive expected logistic costs.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="contractQty" type="Integer1to5Type" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>contract quantity for OMG discounts</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="remainingQty" type="Integer1to5Type" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>remaining quantity for OMG discounts (contractQty - already ordered quantities)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productConditionType">
+		<xsd:annotation>
+			<xsd:documentation>Condition could be financed by more than one party at the same time (supplier, manufacturer, wholesaler or some 3rd party).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0">
+				<xsd:element ref="volumeDependentCondition"/>
+			</xsd:sequence>
+			<xsd:attribute name="type" type="xsd:string" use="required"/>
+			<xsd:attribute name="description" type="xsd:string" use="optional"/>
+			<xsd:attribute name="isWholesalerFinanced" type="xsd:boolean" use="required">
+				<xsd:annotation>
+					<xsd:documentation>Is this condition at least partially financed by wholesaler.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="isSupplierFinanced" type="xsd:boolean" use="required">
+				<xsd:annotation>
+					<xsd:documentation>Is this condition at least partially financed by supplier.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="isManufacturerFinanced" type="xsd:boolean" use="required">
+				<xsd:annotation>
+					<xsd:documentation>Is this condition at least partially financed by supplier.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="is3rdPartyFinanced" type="xsd:boolean" use="required">
+				<xsd:annotation>
+					<xsd:documentation>Is this condition at least partially financed by 3rd party (not wholesaler, not supplier, not manufacturer).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="volumeDependentCondition">
+		<xsd:annotation>
+			<xsd:documentation>Volume dependent condition.</xsd:documentation>
+			<xsd:documentation>With this condition type customer gets one part of his discount at the moment of sales and the rest after he has reached the target volume.</xsd:documentation>
+			<xsd:documentation>Target volume can be defined by amount or by quantity (see isVolumeQuantityDefined attributes).</xsd:documentation>
+			<xsd:documentation>isVolumeQuantityDefined</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="target" type="TwoPointPrecisionDecimal" use="required"/>
+			<xsd:attribute name="actual" type="TwoPointPrecisionDecimal" use="required"/>
+			<xsd:attribute name="targetDefinition" type="targetDefinitionType" use="required">
+				<xsd:annotation>
+					<xsd:documentation>Defines the meaning of target and actual attributes (e.g. quantity od turnover).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="directDiscountPercent" type="SimplePercentType" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This discount percent is given directly at purchase time.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="directDiscountMinimalQuantity" type="xsd:int" use="required">
+				<xsd:annotation>
+					<xsd:documentation>Direct discount will be given only iff at least this quantity is ordered.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="targetAchievementDiscountPercent" type="SimplePercentType" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This discount is given after target has been reached.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productOrderLine">
+		<xsd:annotation>
+			<xsd:documentation>This is normal order line. Some of the attributes from orderHeader can be overridden.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="EAN"/>
+				<xsd:element ref="pharmaCode"/>
+				<xsd:element ref="supplierProductNumber"/>
+			</xsd:choice>
+			<xsd:attribute name="orderQuantity" type="Integer1to5Type" use="required"/>
+			<xsd:attribute name="roundUpForCondition" type="xsd:boolean" use="optional" default="true">
+				<xsd:annotation>
+					<xsd:documentation>roundUpForCondition - If set to false, deliveryQuantity will be equal to orderQuantity, no quantity increase for customer to profit from promotions will be done. This can override normal customer record and is valid for this line only.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="backLogDesired" type="xsd:boolean" use="optional" default="true">
+				<xsd:annotation>
+					<xsd:documentation>backlogDesired - If product is not available immediatelly, and this att is set to false, product will not be accepted into order. This can override normal customer record and is valid for this line only.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="deliveryDate" type="xsd:date" use="optional"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="productLabelOrderLine">
+		<xsd:annotation>
+			<xsd:documentation>Product labels are used in pharmacies, drugstores or at doctors to be put on the shelf, near to the goods. By scanning them customer can order identified products.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="EAN"/>
+				<xsd:element ref="pharmaCode"/>
+				<xsd:element ref="supplierProductNumber"/>
+			</xsd:choice>
+			<xsd:attribute name="defaultOrderQuantity" type="Integer1to5Type" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This quantity will be ordered when label is scanned.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="orderTriggerQuantity" type="Integer1to5Type" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>When stock falls to or under this value an order should be placed. This is an optional field, will be provided by our system if not given.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="browseRequest">
+		<xsd:annotation>
+			<xsd:documentation>
+        		Used for messages that deliver content page by page.
+        	</xsd:documentation>
+			<xsd:documentation>Usage: </xsd:documentation>
+			<xsd:documentation>Positioning to the first record: browseDirection=&quot;next&quot; &amp; requestKey=&quot;&quot; </xsd:documentation>
+			<xsd:documentation>Getting next page: browseDirection=&quot;next&quot; &amp; requestKey=&quot;valueGotWhenGettingPreviousPage&quot; </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="direction" type="browseDirection" use="required"/>
+			<xsd:attribute name="requestKey" type="xsd:string" use="required"/>
+			<xsd:attribute name="specificArticleCode" type="Integer1to14Type"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="onlyOnePageFound"/>
+	<xsd:element name="atFirst">
+		<xsd:complexType>
+			<xsd:attribute name="nextPageKey" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="atTheEnd">
+		<xsd:complexType>
+			<xsd:attribute name="previousPageKey" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="inBetween">
+		<xsd:complexType>
+			<xsd:attribute name="nextPageKey" type="xsd:string" use="required"/>
+			<xsd:attribute name="previousPageKey" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="nothingFound"/>
+	<xsd:element name="availability" nillable="true">
+		<xsd:annotation>
+			<xsd:documentation>This element gives information about availability if the goods in the assigned/delivering warehouse.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="backlog" minOccurs="0"/>
+			</xsd:sequence>
+			<xsd:attribute name="status" type="availabilityType" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the main attribute in this element.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="message" type="xsd:string" use="optional">
+				<xsd:annotation>
+					<xsd:documentation>This attribute is filled in the request's language and should be displayed to the user without editting, whenever possible.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="backlog">
+		<xsd:annotation>
+			<xsd:documentation>This element describes how backlog will/would be handeled. Attribute quantity informs whether the goods was TAKEN IN BACKLOG or not. See also line response element, attributte lineAcceptedd.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="quantity" type="xsd:integer" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This is the quantity that is taken in backlog. If zero, no backlog was registered, and other attributes are to be used as information only.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="backlogType" type="backlogType" use="required">
+				<xsd:annotation>
+					<xsd:documentation>This attribute is describing the art of backlog if goods is not immediately available.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,9 @@
+﻿<mymain:myRoot 
+	xmlns:mymain="https://abc.xyz.com/myDmmy/main/v01"
+	xmlns:mybase="https://abc.xyz.com/myDmmy/base/v01"
+	>
+	<mymain:client number="123" password="very secure hahaha!" />
+	<mybase:item kind="abc" />
+	<mybase:item kind="etc" />
+	<mybase:item kind="etc" />
+</mymain:myRoot>

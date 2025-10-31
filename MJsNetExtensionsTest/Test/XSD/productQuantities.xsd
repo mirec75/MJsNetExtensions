@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns="https://salesweb.customer.com/schemas/"
+	targetNamespace="https://salesweb.customer.com/schemas/"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	version="1.0"
+	>
+
+	<xsd:element name="quantities">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="immediatelyAvailable" type="quantityElementType" minOccurs="0" />
+				<xsd:choice minOccurs="0">
+					<xsd:element name="interBranchTransfer" type="quantityElementType" />
+					<xsd:element name="interBranchTransferPossible" type="quantityElementType" />
+				</xsd:choice>
+				<xsd:element name="delayedDelivery" type="quantityElementType" minOccurs="0" />
+				<xsd:element name="purchaseOrder" type="quantityElementType" minOccurs="0" />
+				<xsd:element name="lack" type="quantityElementType" minOccurs="0" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:complexType name="quantityElementType">
+		<xsd:attribute name="value" use="required"> <!-- NOTE: type="xsd:nonNegativeInteger" was converted to C# string via VS2015 XSD Tool... -->
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:int">
+					<xsd:minInclusive value="0"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+
+</xsd:schema>

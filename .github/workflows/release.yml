@@ -1,0 +1,105 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (leave empty to use GitVersion)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Required for GitVersion
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v1.1.1
+      with:
+        versionSpec: '6.x'
+    
+    - name: Determine Version
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v1.1.1
+      with:
+        useConfigFile: true
+        configFilePath: GitVersion.yml
+    
+    - name: Set version
+      id: version
+      run: |
+        if [ -n "${{ github.event.inputs.version }}" ]; then
+          echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          echo "TAG=v${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+        else
+          echo "VERSION=${{ steps.gitversion.outputs.semVer }}" >> $GITHUB_OUTPUT
+          echo "TAG=v${{ steps.gitversion.outputs.semVer }}" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Display version
+      run: |
+        echo "Version: ${{ steps.version.outputs.VERSION }}"
+        echo "Tag: ${{ steps.version.outputs.TAG }}"
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    
+    - name: Test
+      run: dotnet test --configuration Release --no-build --verbosity normal
+    
+    - name: Pack NuGet
+      run: dotnet pack MJsNetExtensions/MJsNetExtensions.csproj --configuration Release --no-build --output nupkg
+    
+    - name: Create Git Tag
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag -a ${{ steps.version.outputs.TAG }} -m "Release ${{ steps.version.outputs.VERSION }}"
+        git push origin ${{ steps.version.outputs.TAG }}
+    
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.version.outputs.TAG }}
+        name: Release ${{ steps.version.outputs.VERSION }}
+        body: |
+          ## Release ${{ steps.version.outputs.VERSION }}
+          
+          ### Changes
+          See [commits](https://github.com/${{ github.repository }}/commits/${{ steps.version.outputs.TAG }}) for details.
+          
+          ### NuGet Package
+          - **Version**: ${{ steps.version.outputs.VERSION }}
+          - **Download**: Available in the assets below
+          
+          ### Installation
+          ```bash
+          dotnet add package MJsNetExtensions --version ${{ steps.version.outputs.VERSION }}
+          ```
+        files: |
+          nupkg/*.nupkg
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Publish to NuGet.org (optional)
+      if: ${{ secrets.NUGET_API_KEY != '' }}
+      run: dotnet nuget push nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+      continue-on-error: true
