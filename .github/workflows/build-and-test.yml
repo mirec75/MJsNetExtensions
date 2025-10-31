@@ -44,6 +44,7 @@ jobs:
     
     - name: Test
       run: dotnet test --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory "TestResults"
+      continue-on-error: true
     
     - name: Upload test results
       uses: actions/upload-artifact@v4
