@@ -21,7 +21,7 @@ jobs:
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v1.1.1
       with:
-        versionSpec: '6.x'
+        versionSpec: '5.x'
     
     - name: Determine Version
       id: gitversion
@@ -43,14 +43,14 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     
     - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal --logger trx --results-directory "TestResults"
+      run: dotnet test --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory "TestResults"
     
     - name: Upload test results
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: test-results
-        path: TestResults/*.trx
+        path: TestResults/**/*.trx
     
     - name: Pack NuGet
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
